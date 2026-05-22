@@ -69,7 +69,7 @@ const User =
   require("./models/user");
 
 const Application =
-  require("./models/Application");
+  require("./models/application");
 
 
 // =============================
