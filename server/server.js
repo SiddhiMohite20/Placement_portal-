@@ -66,7 +66,7 @@ mongoose
 // =============================
 
 const User =
-  require("./models/User");
+  require("./models/user");
 
 const Application =
   require("./models/Application");
