@@ -16,7 +16,7 @@ function Dashboard() {
 
     axios
       .get(
-        `http://localhost:5000/dashboard/${email}`
+        `https://placement-portal-kqxq.onrender.com/dashboard/${email}`
       )
       .then((res) => {
         setApplications(res.data);

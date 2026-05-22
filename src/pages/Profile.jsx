@@ -33,7 +33,7 @@ function Profile() {
       );
 
       const res = await axios.post(
-        "http://localhost:5000/api/ai/analyze-resume",
+        "https://placement-portal-kqxq.onrender.com/api/ai/analyze-resume",
         formData
       );
 

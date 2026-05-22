@@ -25,7 +25,7 @@ const ResumeAnalyzer = () => {
       formData.append("resume", file);
 
       const response = await axios.post(
-        "http://localhost:5000/api/ai/analyze-resume",
+        "https://placement-portal-kqxq.onrender.com/api/ai/analyze-resume",
         formData
       );
 

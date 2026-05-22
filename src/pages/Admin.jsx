@@ -17,7 +17,7 @@ function Admin() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/all-applications"
+        "https://placement-portal-kqxq.onrender.com/all-applications"
       );
 
       setApplications(res.data);
@@ -36,7 +36,7 @@ function Admin() {
     try {
 
       await axios.put(
-        `http://localhost:5000/update-status/${id}`,
+        `https://placement-portal-kqxq.onrender.com/update-status/${id}`,
         { status }
       );
 

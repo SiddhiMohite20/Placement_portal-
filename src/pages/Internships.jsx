@@ -75,13 +75,13 @@ function Internships() {
       // Upload Resume
       const uploadRes =
         await axios.post(
-          "http://localhost:5000/upload",
+          "https://placement-portal-kqxq.onrender.com/upload",
           formData
         );
 
       // Save Application
       await axios.post(
-        "http://localhost:5000/apply",
+        "https://placement-portal-kqxq.onrender.com/apply",
         {
 
           email:

@@ -30,7 +30,7 @@ function Login() {
 
       const res = await fetch(
 
-        "http://localhost:5000/login",
+        "https://placement-portal-kqxq.onrender.com/login",
 
         {
           method: "POST",

@@ -55,13 +55,13 @@ function Jobs() {
       // ✅ UPLOAD RESUME
       const uploadRes =
         await axios.post(
-          "http://localhost:5000/upload",
+          "https://placement-portal-kqxq.onrender.com/upload",
           formData
         );
 
       // ✅ SAVE APPLICATION
       await axios.post(
-        "http://localhost:5000/apply",
+        "https://placement-portal-kqxq.onrender.com/apply",
         {
 
           email:
