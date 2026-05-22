@@ -13,6 +13,8 @@ import Jobs from "./pages/Jobs";
 import Internships from "./pages/Internships";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
+import ResumeAnalyzer from "./pages/ResumeAnalyzer";
+import Chatbot from "./pages/Chatbot";
 
 function ProtectedRoute({ children }) {
 
@@ -94,6 +96,15 @@ function App() {
   element={<Admin />}
 />
 
+
+<Route
+  path="/ResumeAnalyzer"
+  element={<ResumeAnalyzer />}
+/>
+<Route
+  path="/chatbot"
+  element={<Chatbot />}
+/>
       </Routes>
 
     </BrowserRouter>

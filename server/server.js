@@ -1,65 +1,165 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const multer = require("multer");
-const aiRoutes = require("./routes/aiRoutes");
 
 require("dotenv").config();
 
 const app = express();
 
+
+// =============================
+// Middleware
+// =============================
+
 app.use(cors());
-app.use("/", aiRoutes);
 app.use(express.json());
 
 
-// 🔗 MongoDB Connect
+// =============================
+// Upload Middleware
+// =============================
+
+const upload =
+  require("./middleware/upload");
+
+
+// =============================
+// AI Routes
+// =============================
+
+const aiRoutes =
+  require("./routes/aiRoutes");
+
+app.use("/api/ai", aiRoutes);
+
+
+// =============================
+// Chatbot Routes
+// =============================
+
+const chatbotRoutes =
+  require("./routes/chatRoutes");
+
+app.use("/api", chatbotRoutes);
+
+
+// =============================
+// MongoDB Connection
+// =============================
+
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+
+  .then(() =>
+    console.log(
+      "MongoDB Connected"
+    )
+  )
+
+  .catch((err) =>
+    console.log(err)
+  );
 
 
-// 📦 Models
-const User = require("./models/User");
-const Application = require("./models/Application");
+// =============================
+// Models
+// =============================
+
+const User =
+  require("./models/User");
+
+const Application =
+  require("./models/Application");
 
 
-// 🏠 TEST ROUTE
+// =============================
+// Upload Resume Route
+// =============================
+
+app.post(
+
+  "/upload",
+
+  upload.single("resume"),
+
+  (req, res) => {
+
+    try {
+
+      res.json({
+
+        success: true,
+
+        file:
+          req.file.filename
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      res.status(500).json({
+
+        message:
+          "Upload Failed"
+      });
+    }
+  }
+);
+
+
+// =============================
+// Test Route
+// =============================
+
 app.get("/", (req, res) => {
 
   res.send("API Running...");
 });
 
 
-// 🔐 REGISTER
+// =============================
+// Register
+// =============================
+
 app.post("/register", async (req, res) => {
 
   try {
 
-    const { name, email, password } =
-      req.body;
+    const {
+      name,
+      email,
+      password
+    } = req.body;
 
     const existing =
-      await User.findOne({ email });
+      await User.findOne({
+        email
+      });
 
     if (existing) {
 
       return res.json({
-        message: "User already exists"
+
+        message:
+          "User already exists"
       });
     }
 
-    const user = new User({
-      name,
-      email,
-      password
-    });
+    const user =
+      new User({
+
+        name,
+        email,
+        password
+      });
 
     await user.save();
 
     res.json({
-      message: "User Registered"
+
+      message:
+        "User Registered"
     });
 
   } catch (error) {
@@ -67,22 +167,58 @@ app.post("/register", async (req, res) => {
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error"
+
+      message:
+        "Server Error"
     });
   }
 });
 
 
-// 🔐 LOGIN
+// =============================
+// Login
+// =============================
+
 app.post("/login", async (req, res) => {
 
   try {
 
-    const { email, password } =
-      req.body;
+    const {
+      email,
+      password
+    } = req.body;
+
+    // =====================
+    // ADMIN LOGIN
+    // =====================
+
+    if (
+      email === "admin@gmail.com" &&
+      password === "admin123"
+    ) {
+
+      return res.json({
+
+        message:
+          "Admin Login",
+
+        email:
+          "admin@gmail.com",
+
+        name:
+          "Admin",
+
+        isAdmin: true
+      });
+    }
+
+    // =====================
+    // NORMAL USER LOGIN
+    // =====================
 
     const user =
       await User.findOne({
+
         email,
         password
       });
@@ -90,15 +226,25 @@ app.post("/login", async (req, res) => {
     if (user) {
 
       res.json({
-        message: "Login Success",
-        email: user.email,
-        name: user.name,
+
+        message:
+          "Login Success",
+
+        email:
+          user.email,
+
+        name:
+          user.name,
+
+        isAdmin: false
       });
 
     } else {
 
       res.json({
-        message: "Invalid Credentials"
+
+        message:
+          "Invalid Credentials"
       });
     }
 
@@ -107,13 +253,18 @@ app.post("/login", async (req, res) => {
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error"
+
+      message:
+        "Server Error"
     });
   }
 });
 
 
-// 📝 APPLY JOB / INTERNSHIP
+// =============================
+// Apply Job / Internship
+// =============================
+
 app.post("/apply", async (req, res) => {
 
   try {
@@ -124,7 +275,9 @@ app.post("/apply", async (req, res) => {
     await application.save();
 
     res.json({
-      message: "Application Saved"
+
+      message:
+        "Application Saved"
     });
 
   } catch (error) {
@@ -132,22 +285,31 @@ app.post("/apply", async (req, res) => {
     console.log(error);
 
     res.status(500).json({
-      message: "Server Error"
+
+      message:
+        "Server Error"
     });
   }
 });
 
 
-// 📊 DASHBOARD DATA
+// =============================
+// Dashboard
+// =============================
+
 app.get(
+
   "/dashboard/:email",
+
   async (req, res) => {
 
     try {
 
       const data =
         await Application.find({
-          email: req.params.email
+
+          email:
+            req.params.email
         });
 
       res.json(data);
@@ -157,53 +319,23 @@ app.get(
       console.log(error);
 
       res.status(500).json({
-        message: "Server Error"
+
+        message:
+          "Server Error"
       });
     }
   }
 );
 
 
-// 📄 RESUME UPLOAD
-const storage = multer.diskStorage({
-
-  destination: (req, file, cb) => {
-
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-
-    cb(
-      null,
-      Date.now() + file.originalname
-    );
-  }
-});
-
-const upload = multer({ storage });
-
-app.post(
-  "/upload",
-  upload.single("resume"),
-  (req, res) => {
-
-    if (!req.file) {
-
-      return res.status(400).json({
-        message: "No file uploaded"
-      });
-    }
-
-    res.json({
-      message: "Resume Uploaded",
-      file: req.file.filename
-    });
-  }
-);
+// =============================
+// Get All Applications
+// =============================
 
 app.get(
+
   "/all-applications",
+
   async (req, res) => {
 
     try {
@@ -218,28 +350,41 @@ app.get(
       console.log(error);
 
       res.status(500).json({
-        message: "Server Error"
+
+        message:
+          "Server Error"
       });
     }
   }
 );
 
-// 🔄 UPDATE STATUS
+
+// =============================
+// Update Status
+// =============================
+
 app.put(
+
   "/update-status/:id",
+
   async (req, res) => {
 
     try {
 
       await Application.findByIdAndUpdate(
+
         req.params.id,
+
         {
-          status: req.body.status
+          status:
+            req.body.status
         }
       );
 
       res.json({
-        message: "Status Updated"
+
+        message:
+          "Status Updated"
       });
 
     } catch (error) {
@@ -247,14 +392,19 @@ app.put(
       console.log(error);
 
       res.status(500).json({
-        message: "Server Error"
+
+        message:
+          "Server Error"
       });
     }
   }
 );
 
 
-// 🚀 SERVER START
+// =============================
+// Server Start
+// =============================
+
 app.listen(5000, () => {
 
   console.log(
