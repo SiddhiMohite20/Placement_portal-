@@ -4,22 +4,97 @@ import axios from "axios";
 function Jobs() {
 
   const jobs = [
-    {
-      company: "Google",
-      role: "Frontend Developer",
-      location: "Pune"
-    },
-    {
-      company: "Infosys",
-      role: "Backend Developer",
-      location: "Mumbai"
-    },
-    {
-      company: "TCS",
-      role: "Java Developer",
-      location: "Nashik"
-    }
-  ];
+  {
+    company: "Google",
+    role: "Frontend Developer",
+    location: "Pune",
+    salary: "₹12 LPA"
+  },
+  {
+    company: "Infosys",
+    role: "Backend Developer",
+    location: "Mumbai",
+    salary: "₹6 LPA"
+  },
+  {
+    company: "TCS",
+    role: "Java Developer",
+    location: "Nashik",
+    salary: "₹7 LPA"
+  },
+  {
+    company: "Wipro",
+    role: "Software Engineer",
+    location: "Pune",
+    salary: "₹5.5 LPA"
+  },
+  {
+    company: "Cognizant",
+    role: "Programmer Analyst",
+    location: "Bangalore",
+    salary: "₹6.5 LPA"
+  },
+  {
+    company: "Capgemini",
+    role: "Associate Consultant",
+    location: "Mumbai",
+    salary: "₹7.5 LPA"
+  },
+  {
+    company: "Accenture",
+    role: "Associate Software Engineer",
+    location: "Hyderabad",
+    salary: "₹6.8 LPA"
+  },
+  {
+    company: "Deloitte",
+    role: "Software Developer",
+    location: "Pune",
+    salary: "₹8 LPA"
+  },
+  {
+    company: "LTIMindtree",
+    role: "Graduate Engineer Trainee",
+    location: "Bangalore",
+    salary: "₹5 LPA"
+  },
+  {
+    company: "Tech Mahindra",
+    role: "Java Full Stack Developer",
+    location: "Noida",
+    salary: "₹5.5 LPA"
+  },
+  {
+    company: "HCLTech",
+    role: "Software Engineer",
+    location: "Chennai",
+    salary: "₹6 LPA"
+  },
+  {
+    company: "Darwinbox",
+    role: "Frontend Developer",
+    location: "Hyderabad",
+    salary: "₹10 LPA"
+  },
+  {
+    company: "NICE",
+    role: "Software Developer",
+    location: "Pune",
+    salary: "₹11 LPA"
+  },
+  {
+    company: "Amazon",
+    role: "SDE Intern",
+    location: "Bangalore",
+    salary: "₹18 LPA"
+  },
+  {
+    company: "Microsoft",
+    role: "Software Engineer",
+    location: "Hyderabad",
+    salary: "₹20 LPA"
+  }
+];
 
   const [selectedJob, setSelectedJob] =
     useState(null);
@@ -55,13 +130,13 @@ function Jobs() {
       // ✅ UPLOAD RESUME
       const uploadRes =
         await axios.post(
-          "https://placement-portal-kqxq.onrender.com/upload",
+          "http://localhost:5000/upload",
           formData
         );
 
       // ✅ SAVE APPLICATION
       await axios.post(
-        "https://placement-portal-kqxq.onrender.com/apply",
+        "http://localhost:5000/apply",
         {
 
           email:

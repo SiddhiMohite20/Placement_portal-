@@ -4,25 +4,87 @@ import axios from "axios";
 function Internships() {
 
   const internships = [
-    {
-      company: "TCS",
-      role: "Web Development Intern",
-      duration: "3 Months",
-      stipend: "₹15000"
-    },
-    {
-      company: "Infosys",
-      role: "Java Intern",
-      duration: "6 Months",
-      stipend: "₹20000"
-    },
-    {
-      company: "Wipro",
-      role: "React Intern",
-      duration: "2 Months",
-      stipend: "₹12000"
-    }
-  ];
+  {
+    company: "TCS",
+    role: "Full Stack Developer Intern",
+    duration: "3 Months",
+    stipend: "₹15000",
+    description:
+      "Work on Java, Spring Boot, React and REST APIs in enterprise applications."
+  },
+  {
+    company: "Infosys",
+    role: "Java Developer Intern",
+    duration: "6 Months",
+    stipend: "₹20000",
+    description:
+      "Develop Java applications, work with databases and participate in Agile development."
+  },
+  {
+    company: "Wipro",
+    role: "React Developer Intern",
+    duration: "2 Months",
+    stipend: "₹12000",
+    description:
+      "Build responsive user interfaces using React and JavaScript."
+  },
+  {
+    company: "Cognizant",
+    role: "Software Engineer Intern",
+    duration: "6 Months",
+    stipend: "₹18000",
+    description:
+      "Work on full-stack applications, APIs, and cloud technologies."
+  },
+  {
+    company: "Capgemini",
+    role: "Software Developer Intern",
+    duration: "4 Months",
+    stipend: "₹17000",
+    description:
+      "Develop web applications using Java and modern frontend technologies."
+  },
+  {
+    company: "Accenture",
+    role: "Associate Software Engineer Intern",
+    duration: "6 Months",
+    stipend: "₹22000",
+    description:
+      "Work on cloud, automation, and enterprise software development."
+  },
+  {
+    company: "Deloitte",
+    role: "Technology Consulting Intern",
+    duration: "3 Months",
+    stipend: "₹25000",
+    description:
+      "Participate in consulting projects, analytics, and software development."
+  },
+  {
+    company: "LTIMindtree",
+    role: "Software Engineer Intern",
+    duration: "6 Months",
+    stipend: "₹18000",
+    description:
+      "Build applications using Java, SQL, and cloud technologies."
+  },
+  {
+    company: "Darwinbox",
+    role: "Frontend Developer Intern",
+    duration: "4 Months",
+    stipend: "₹25000",
+    description:
+      "Develop modern HR-tech applications using React and APIs."
+  },
+  {
+    company: "NICE",
+    role: "Software Developer Intern",
+    duration: "6 Months",
+    stipend: "₹30000",
+    description:
+      "Work on scalable software systems, databases, and backend services."
+  }
+];
 
   const [
     selectedInternship,
@@ -75,13 +137,13 @@ function Internships() {
       // Upload Resume
       const uploadRes =
         await axios.post(
-          "https://placement-portal-kqxq.onrender.com/upload",
+          "http://localhost:5000/upload",
           formData
         );
 
       // Save Application
       await axios.post(
-        "https://placement-portal-kqxq.onrender.com/apply",
+        "http://localhost:5000/apply",
         {
 
           email:
